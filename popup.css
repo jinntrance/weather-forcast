@@ -1,0 +1,198 @@
+html,body{
+	height:100%;
+}
+html,
+body,
+article,
+section,
+div,
+p{
+	margin:0;
+	padding:0;
+	font:14px/1.5 "\5FAE\8F6F\96C5\9ED1"
+}
+img{
+	border:0 none;
+}
+.clearfix:after{
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+.T_weather_today{
+	padding:16px 10px;
+	width:464px;
+	height:198px;
+	background:url( "bg.png" ) no-repeat;
+	position:relative;
+}
+#otherCity{
+	width:239px;
+	height:23px;
+	padding:4px;
+	border:2px solid #e3e4e8;
+	border-radius:6px;
+	margin-bottom:16px;
+}
+.txt_size32{
+	font-size:32px;
+}
+.T_weather_condition,
+.T_weather_calendar,
+.T_weather_position,
+.T_weather_icon{
+	float:left;
+}
+.T_weather_icon{
+	margin-left:24px;
+}
+.T_weather_temperature{
+	float:right;
+	margin-right:4px;
+}
+.T_weather_icon{
+	position:relative;
+	top:8px;
+}
+.T_weather_today_box{
+	color:#fff;
+}
+.T_weather_curmonth{
+	text-align:right;
+	color:#fff;
+}
+.T_weather_index{
+	position:absolute;
+	left:10px;
+	bottom:14px;
+	color:#fff;
+}
+
+.T_weather_week{
+	width:484px;
+}
+.T_weather_week_each{
+	float:left;
+	border-right:1px solid #ebecef;
+	color:#949fab;
+}
+.T_weather_week_each p{
+	text-align:center;
+}
+.T_weather_week_each{
+	width:80px;
+	border-right:1px solid #efeff1;
+}
+.T_weather_week_each.last{
+	border-right:0;
+	width:79px;
+}
+.T_weather_week_each .week_calendar{
+	width:66px;
+	padding:2px 0;
+	margin:6px auto;
+	font-size:10px;
+	border-radius:8px;
+	background-color:#f0f2f5;
+}
+.T_weather_week_each  img{
+	display:block;
+	height:22px;
+	margin:10px auto;
+}
+.T_weather_index_box{
+	height:102px;
+}
+.T_weather_each_index{
+	float:left;
+	width:91px;
+	height:100%;
+	padding:8px 15px;
+}
+.T_weather_each_index p{
+	text-align:center;
+	border-radius:12px;
+	padding:2px 6px;
+	margin:0 auto 12px;
+	width:60px;
+}
+.T_weather_each_index div{
+	color:#fff;
+	font-size:12px;
+}
+.T_weather_each_index:first-of-type{
+	background-color:#48cfad;
+	border-bottom:3px solid #37bc9b;
+}
+.T_weather_each_index:first-of-type p{
+	color:#1d856b;
+	background-color:#37bc9b;
+}
+.T_weather_each_index:nth-of-type(2){
+	background-color:#5d9cec;
+	border-bottom:3px solid #4a89dc;
+}
+.T_weather_each_index:nth-of-type(2) p{
+	color:#2b5ea2;
+	background-color:#4a89dc;
+}
+.T_weather_each_index:nth-of-type(3){
+	background-color:#ed5565;
+	border-bottom:3px solid #da4453;
+}
+.T_weather_each_index:nth-of-type(3) p{
+	color:#971c29;
+	background-color:#da4453;
+}
+.T_weather_each_index:nth-of-type(4){
+	background-color:#eda055;
+	border-bottom:3px solid #dc8836;
+}
+.T_weather_each_index:nth-of-type(4) p{
+	color:#8f4f11;
+	background-color:#dc8836;
+}
+.T_weather_operator a{
+	display:block;
+	float:left;
+	height:60px;
+	line-height:60px;
+	padding-left:60px;
+	color:#afb7c0;
+	width:182px;
+	text-decoration:none;
+	background-color:#fff;
+}
+.T_weather_operator a.cur_operator,
+.T_weather_operator a:hover{
+	background-color:#f3f3f4;
+}
+.T_weather_schedule{
+	background:url( 'images/schedule.png' ) 16px 14px no-repeat;
+}
+.T_weather_settings{
+	background:url( 'images/setting.png' ) 16px 14px no-repeat;
+}
+/********* ���� ************/
+.T_calendar th{
+	color:#fdf8c4;
+	font-size:12px;
+}
+.T_calendar th,
+.T_calendar td{
+	width:25px;
+	height:16px;
+	color:#edf2f7;
+	text-align:right;
+	font-size:12px;
+}
+.T_calendar .calendar_title_highlight,
+.T_calendar .cur_day{
+	color:#ed5565;
+}
+strong, b {
+    font-weight: bold;
+}
+/********* ���� ************/

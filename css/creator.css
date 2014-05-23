@@ -1,0 +1,174 @@
+html,body{
+	height:100%;
+}
+html,
+body,
+article,
+section,
+div,
+ul,
+li,
+p{
+	margin:0;
+	padding:0;
+	font:14px/1.5 "\5FAE\8F6F\96C5\9ED1"
+}
+img{
+	border:0 none;
+}
+a{
+	text-decoration:none;
+}
+article{
+	width:448px;
+	padding-left:8px;
+}
+body{
+	height:500px;
+	overflow:hidden;
+}
+
+.clearfix:after{
+	content:".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+ul{
+	list-style-type:none;
+}
+body{
+	padding:8px;
+}
+#operatorBox a{
+	color:#272828;
+	background-color:#f1f1f1;
+	border:1px solid #dcdcdc;
+	padding:6px 32px;
+	display:inline-block;
+	margin-right:15px;
+}
+#operatorBox a:hover{
+	background-color:#f8f8f8;
+	border-color:#cdcdcd;
+	box-shadow:1px 1px 1px #cdcdcd;
+}
+#operatorBox a.highlightRed{
+	background-color:#df1d34;
+	color:#fff;
+	box-shadow:0 0 0;
+	border:1px solid #b32828;
+}
+
+article input[type="text"]{
+	padding:6px;
+	border:1px solid #cfcfcf;
+}
+#planTitle{
+	width:370px;
+	margin:24px 0 13px 0;
+}
+.calendar_day,
+.calendar_time,
+.calendar_start{
+	float:left;
+	position:relative;
+}
+.calendar_time{
+	margin:0 16px;
+}
+.calendar_day input{
+	width:74px;
+}
+.calendar_time input{
+	width:36px;
+}
+.calendar_start{
+	padding:6px 0;
+}
+
+.select_repeat{
+	margin:13px 0 20px 0;
+}
+.repeat_day,
+.repeat_week{
+	position:relative;
+}
+.same_row{
+	float:left;
+}
+.row_title.same_row,
+span.same_row{
+	padding:6px 0;
+}
+input[type="radio"].same_row{
+	margin-top:10px;
+	margin:10px 6px 0 20px;
+}
+.repeat_box input[type="text"]{
+	width:16px;
+	margin:0 6px;
+}
+
+.select_index{
+	margin:14px 0 12px 0;
+}
+.remind_index{
+	float:left;
+	margin-right:35px;
+}
+.remind_index.last{
+	margin-right:0;
+}
+.explain{
+	color:#9d9d9d;
+}
+
+
+/**************** pop up *****************/
+.pop_up{
+	position:absolute;
+	left:0;
+	top:30px;
+	border:1px solid #000;
+	background-color:#fff;
+	display:none;
+	z-index:9999;
+}
+.same_row .pop_up{
+	left:6px;
+}
+.pop_up_list{
+	margin:8px;
+	height:176px;
+}
+.pop_up_list.overflow{
+	margin-right:0;
+	overflow-x:hidden;
+	overflow-y:scroll;
+}
+.pop_up li{
+	text-align:center;
+	width:70px;
+	height:24px;
+	margin:1px 0;
+	cursor:pointer;
+}
+.overflow{
+	margin-right:2px;
+}
+.pop_up li:hover,
+.pop_up li.current{
+	background-color:#d1eef5;
+}
+#calendarMonthTitle{
+	text-align:center;
+}
+#calendarMonth{
+	display:inline-block;
+	width:80px;
+}
+.calendar_day .pop_up{
+	padding:4px 12px;
+}

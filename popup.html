@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+    <title>天气系统</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=GB18030" />
+    <link href="css/ui-lightness/jquery-ui-1.10.4.custom.min.css" type="text/css" rel="stylesheet" />
+    <link href="popup.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<article class="T_weather_today clearfix">
+    <section class="T_weather_condition">
+        <input type="text" placeholder="查看其它城市天气" id="otherCity"/>
+        <div class="T_weather_today_box clearfix">
+            <div class="T_weather_position">
+                <p class="txt_size32" id="cityname">成都</p>
+                <p id="cityname_en">CHENGDU</p>
+                <p id="time" style="display: none">9:00</p>
+            </div>
+            <img src="images/weather.png" class="T_weather_icon"/>
+            <div class="T_weather_temperature">
+                <p class="txt_size32"><span id="temp">19</span>℃</p>
+                <p id="condition">多云</p>
+            </div>
+        </div>
+        <div class="T_weather_index">空气质量指数:<span id="weatherIndex">127(轻度污染)</span></div>
+    </section>
+    <section class="T_weather_calendar">
+        <p class="txt_size32 T_weather_curmonth"><span id="month"></span>月</p>
+        <div id="calendarBox"></div>
+    </section>
+</article>
+<article class="T_weather_week">
+    <section class="clearfix" id="prediction_in_week">
+        <div class="T_weather_week_each">
+            <p class="week_calendar">3/11 星期二</p>
+            <img src="images/weather_icon/1.png" alt="" />
+            <p class="week_each_temperature">10°/21°</p>
+        </div>
+        <div class="T_weather_week_each">
+            <p class="week_calendar">3/12 星期三</p>
+            <img src="images/weather_icon/2.png" alt="" />
+            <p class="week_each_temperature">10°/21°</p>
+        </div>
+        <div class="T_weather_week_each">
+            <p class="week_calendar">3/13 星期四</p>
+            <img src="images/weather_icon/3.png" alt="" />
+            <p class="week_each_temperature">10°/21°</p>
+        </div>
+        <div class="T_weather_week_each">
+            <p class="week_calendar">3/14 星期五</p>
+            <img src="images/weather_icon/4.png" alt="" />
+            <p class="week_each_temperature">10°/21°</p>
+        </div>
+        <div class="T_weather_week_each">
+            <p class="week_calendar">3/15 星期六</p>
+            <img src="images/weather_icon/5.png" alt="" />
+            <p class="week_each_temperature">10°/21°</p>
+        </div>
+        <div class="T_weather_week_each last">
+            <p class="week_calendar">3/16 星期日</p>
+            <img src="images/weather_icon/6.png" alt="" />
+            <p class="week_each_temperature">10°/21°</p>
+        </div>
+    </section>
+    <section class="clearfix T_weather_index_box" id="weather_index_box">
+        <div class="T_weather_each_index" id="umbrellaIndex">
+            <p>雨伞指数</p>
+            <div>天气较好，不用带伞。</div>
+        </div>
+        <div class="T_weather_each_index" id="clothIndex">
+            <p>穿衣指数</p>
+            <div>较舒适，建议穿薄外套或牛仔裤等服饰。</div>
+        </div>
+        <div class="T_weather_each_index" id="sportIndex">
+            <p>运动指数</p>
+            <div>较适宜，在户外运动，请注意增减衣物。</div>
+        </div>
+        <div class="T_weather_each_index" id="coldIndex">
+            <p>感冒指数</p>
+            <div>较易发，温差较大，较易感冒，注意防护。</div>
+        </div>
+    </section>
+    <section class="clearfix T_weather_operator">
+        <a href="plan.html" class="T_weather_schedule cur_operator">查看我的日程安排</a>
+        <a href="#" class="T_weather_settings">设置通知</a>
+    </section>
+</article>
+<script type="text/javascript" src="js/T.plugin.calendar.js"></script>
+<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="js/common.js" ></script>
+<script type="text/javascript" src="js/popup.js"  charset="utf-8"></script>
+<script type="text/javascript" src="js/change-location.js" charset="GB18030"></script>
+</body>
+</html>
+

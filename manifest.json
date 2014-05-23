@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+
+  "name": "天气系统",
+  "description": "基于AJAX的天气预报查询系统",
+  "version": "1.0",
+   "background": {
+        "scripts": ["js/jquery-2.0.3.min.js","js/jquery-ui-1.10.4.custom.min.js", "js/common.js", "js/background.js"]
+    },
+  "browser_action": {
+    "default_icon": "weather_plugin.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+      "cookies", "contextMenus", "activeTab", "tabs", "storage","notifications", "*://*/*", "\u003Call_urls\u003E"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+
+}

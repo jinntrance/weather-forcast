@@ -1,0 +1,27 @@
+/********* 日历 ************/
+.T_calendar th{
+	color:#a0a0a0;
+	font-size:12px;
+}
+.T_calendar th,
+.T_calendar td{
+	width:23px;
+	height:14px;
+	border:1px solid #fff;
+	text-align:center;
+	font-size:12px;
+}
+.T_calendar .calendar_title_highlight,
+.T_calendar .cur_day{
+	color:#ed5565;
+}
+/********* for dynamic ************/
+.T_calendar td.disable{
+	color:#edf2f7;
+}
+.T_calendar td.enable:hover{
+	cursor:pointer;
+	background-color:#edeeee;
+	border-color:#979999;
+}
+/********* 日历 ************/

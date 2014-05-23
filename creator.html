@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+  <head>
+	<meta charset="utf-8">
+    <title>plan</title>
+    <link href="css/creator.css" type="text/css" rel="stylesheet" />
+	<link href="css/T.plugin.calendar.css" type="text/css" rel="stylesheet" >
+	<!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
+     -->
+  </head>
+  <body>
+	<div id="operatorBox">
+		<a href="plan.html">舍弃</a><a href="#" class="highlightRed" id="createPlan">创建</a>
+	</div>
+	<article class="clearfix">
+			<input type="text" placeholder="无标题活动" value="" id="planTitle"/>
+			<div class="clearfix">
+				<div class="calendar_day">
+					<input type="text" id="calendarDay" value="2014-04-22"/>
+					<div class="pop_up">
+						<div id="calendarMonthTitle">
+							<a href="#" id="prevMonth">&lt;&lt;</a>
+							<span id="calendarMonth"></span>
+							<a href="#" id="nextMonth">&gt;&gt;</a>
+						</div>
+						<div id="popCalendar">
+						</div>
+					</div>
+				</div>
+				<div class="calendar_time">
+					<input type="text" value="20:00" id="calendarTime"/>
+					<div id="popTime" class="pop_up">
+						<ul class="pop_up_list overflow">
+							<li>00:00</li>
+							<li>00:30</li>
+							<li>01:00</li>
+							<li>01:30</li>
+							<li>02:00</li>
+							<li>02:30</li>
+							<li>03:00</li>
+							<li>03:30</li>
+							<li>04:00</li>
+							<li>04:30</li>
+							<li>05:00</li>
+							<li>05:30</li>
+							<li>06:00</li>
+							<li>06:30</li>
+							<li>07:00</li>
+							<li>07:30</li>
+							<li>08:00</li>
+							<li>08:30</li>
+							<li>09:00</li>
+							<li>09:30</li>
+							<li>10:00</li>
+							<li>10:30</li>
+							<li>11:00</li>
+							<li>11:30</li>
+							<li>12:00</li>
+							<li>12:30</li>
+							<li>13:00</li>
+							<li>13:30</li>
+							<li>14:00</li>
+							<li>14:30</li>
+							<li>15:00</li>
+							<li>15:30</li>
+							<li>16:00</li>
+							<li>16:30</li>
+							<li>17:00</li>
+							<li>17:30</li>
+							<li>18:00</li>
+							<li>18:30</li>
+							<li>19:00</li>
+							<li>19:30</li>
+							<li>20:00</li>
+							<li>20:30</li>
+							<li>21:00</li>
+							<li>21:30</li>
+							<li>22:00</li>
+							<li>22:30</li>
+							<li>23:00</li>
+							<li>23:30</li>
+						</ul>
+					</div>
+				</div>
+				<div class="calendar_start">开始</div>
+			</div>
+			<div class="clearfix select_repeat">
+				<div class="same_row row_title"><input type="checkbox" name="repeat" id="repeatTime"/>重复</div>
+				<div class="same_row clearfix repeat_box">
+					<input type="radio" name="repeattime" class="same_row" value="1" disabled />
+					<span class="same_row">每</span>
+					<div class="same_row repeat_day">
+						<input type="text" id="repeatDay" value="1" disabled />
+						<div class="pop_up">
+							<ul class="pop_up_list">
+								<li>1</li>
+								<li>2</li>
+								<li>3</li>
+								<li>4</li>
+								<li>5</li>
+								<li>6</li>
+								<li>7</li>
+							</ul>
+						</div>
+					</div>
+					<span class="same_row">天</span>
+					<input type="radio" name="repeattime" class="same_row" value="2" disabled />
+					<span class="same_row">每周</span>
+					<div class="same_row repeat_week">
+						<input type="text" id="repeatWeek" value="一" disabled />
+						<div class="pop_up">
+							<ul class="pop_up_list">
+								<li>一</li>
+								<li>二</li>
+								<li>三</li>
+								<li>四</li>
+								<li>五</li>
+								<li>六</li>
+								<li>七</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<p>活动当天想提醒的指数：</p>
+			<div class="clearfix select_index">
+				<div class="remind_index"><input type="checkbox" checked id="yuIndex"/>雨伞指数</div>
+				<div class="remind_index"><input type="checkbox" checked id="yiIndex"/>穿衣指数</div>
+				<div class="remind_index"><input type="checkbox" checked id="dongIndex"/>运动指数</div>
+				<div class="remind_index last"><input type="checkbox" checked id="ganIndex"/>感冒指数</div>
+				<div class="remind_index"><input type="checkbox" checked id="mingIndex"/>过敏指数</div>
+				<div class="remind_index"><input type="checkbox" checked id="shaiIndex"/>晾晒指数</div>
+				<div class="remind_index"><input type="checkbox" checked id="xiIndex"/>洗车指数</div>
+				<div class="remind_index last"><input type="checkbox" checked id="diaoIndex"/>钓鱼指数</div>
+			</div>
+			<p class="explain">注：日程当天会提醒勾选的指数。</p>
+			<p id="errMsg" style="color:red;"></p>
+	</article>
+	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="js/T.plugin.dynamicCalendar.js"></script>
+	<script type="text/javascript" src="js/creator.js"></script>
+  </body>
+</html>
+

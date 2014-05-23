@@ -1,0 +1,39 @@
+/**
+ *
+ */
+$(function(){
+    $('#otherCity').autocomplete({
+        source:function(req,response){
+            var key=$('#otherCity').val();
+            if(key.length>0){
+
+                var url='http://tianqi.2345.com/t/q_lx.php?city='+encodeURI(req.term);
+                console.log("requesting "+url);
+                request(url,function(rsp){
+                        console.log(rsp);
+                        var reg=/\[[\s\S]+\]/;
+                        var src=$.parseJSON(reg.exec(rsp)[0].replace(/'/g,'"')).map(function(e){
+                            console.log(e);
+                            var arry= e.split('|');
+                            return {
+                                label:e[0]+'-'+e[2],
+                                value:e[1]
+                            }
+                        });
+//                        console.log(src)
+                        response(src);
+                    },"text/html;charset=GBK"
+                );
+
+            }
+
+        },
+        change:function(evt,ui){
+            console.log(ui);
+            if(undefined!=ui){
+                $('#otherCity').val(ui.label);
+                air_condition_with_city_id(ui.value,process);
+            }
+        }
+    });
+});
