@@ -74,27 +74,14 @@ function show_condition_weekly(pre_in_6) {
  */
 function process(data){
     console.log(data);
-    var indices_name=data.indices_name;//指数的Titles
-    var indices=data.indices;//指数具体内容提示
-    var pre_in_6=data.week;//未来6天天气
-//    var pre_in_6=data.week.slice(1,7);//未来6天天气
-    ls_set({week:JSON.stringify(pre_in_6)});
-    if(undefined!=indices&&indices.length>1){
-        $('#weather_index_box').html('');
-        indices.forEach(function(content,i){
-            console.log("index content:"+content);
-            var div='<div class="T_weather_each_index">' +
-                '<p>'+indices_name[i]+'</p><div>'+content+'</div></div>';
-            $('#weather_index_box').append(div);//在页面上添加天气指数
-        });
-        //找到对应的四个天气指数并添加，后面需要做成左右可滑动的。
-/*        set_values([
-            ['umbrellaIndex div',indices.filter(function(e){return e.title==="雨伞指数"})[0].detail],
-            ['clothIndex div',indices.filter(function(e){return e.title==="穿衣指数"})[0].detail],
-            ['sportIndex div',indices.filter(function(e){return e.title==="运动指数"})[0].detail],
-            ['coldIndex div',indices.filter(function(e){return e.title==="感冒指数"})[0].detail]
-        ]);*/
-    }
+    ls_set({
+        week:JSON.stringify(data.week)
+    });
+    if(data.indices.length>=8&&data.indices.length==data.indices_name.length)
+    ls_set({
+        indices_name:JSON.stringify(data.indices_name),
+        indices:JSON.stringify(data.indices)
+    });
     show_weather(ls());
 }
 
@@ -130,8 +117,35 @@ function show_weather(w){
     }
     console.log("week data: ");
     console.log(w.week);
-    if(undefined!=w.week)
+    if(undefined!=w.week)    {
         show_condition_weekly(JSON.parse(w.week));
+        //各类指数显示
+        console.log('life index:');
+
+        var indices_name=JSON.parse(w['indices_name']);//指数的Titles
+        var indices=JSON.parse(w['indices']);//指数具体内容提示
+        var pre_in_6=JSON.parse(w['week']);//未来6天天气
+        console.log(indices);
+        console.log(indices_name);
+
+//    var pre_in_6=data.week.slice(1,7);//未来6天天气
+        if(undefined!=indices&&indices.length>1){
+            $('#weather_index_box').html('');
+            indices.forEach(function(content,i){
+                console.log("index content:"+content);
+                var div='<div class="T_weather_each_index">' +
+                    '<p>'+indices_name[i]+'</p><div>'+content+'</div></div>';
+                $('#weather_index_box').append(div);//在页面上添加天气指数
+            });
+            //找到对应的四个天气指数并添加，后面需要做成左右可滑动的。
+            /*        set_values([
+             ['umbrellaIndex div',indices.filter(function(e){return e.title==="雨伞指数"})[0].detail],
+             ['clothIndex div',indices.filter(function(e){return e.title==="穿衣指数"})[0].detail],
+             ['sportIndex div',indices.filter(function(e){return e.title==="运动指数"})[0].detail],
+             ['coldIndex div',indices.filter(function(e){return e.title==="感冒指数"})[0].detail]
+             ]);*/
+        }
+    }
 }
 
 function air_condition_desc(aqi_string){

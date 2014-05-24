@@ -62,9 +62,6 @@ function air_condition_with_city_id(city_id,callback){
         ls_set(json);
         console.log("fetched json: ");
         console.log(json);
-        ls_set({
-            week:JSON.stringify(week)
-        });
         var new_url="http://tianqi.2345.com/"+json.pinyin+"/"+city_id+".htm";
         request_in_mime_on_load(new_url,function(response){
             var reg=/<ul[\s\S]+?<\/ul>/g;
