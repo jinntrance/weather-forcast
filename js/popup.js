@@ -5,46 +5,59 @@
 $(function(){
    //即时显示历史存储的相关数据，增强用户体验
    show_weather(ls());
-/*   weather_condition("realtime",function(wi){
-       var w=wi.weatherinfo;
 
-       if(undefined!=w) {
-           ls_set(w);
-           show_weather(w)
-       }
-   });*/
-
+    //
    air_condition(process);
 });
 
+function find_exact_img(weather,size) {
+    if(size=='64') size="64";
+    else size='40';
+    var img = "images/icons/weather_icon_"+size+'_';
+    //把天气状况转化成对应的icon
+    var dict={
+        '晴': '01',
+        '多云': '02',
+        '阴': '03',
+        '雾': '04',
+        '小雨': '05',
+        '中雨': '06',
+        '大雨': '07',
+        '暴雨': '08',
+        '雷雨': '09',
+        '冰雹': '10',
+        '雨雪': '11',
+        '小雪': '12',
+        '中雪': '13',
+        '大雪': '14',
+        '暴雪': '15',
+        '阵雨': '16',
+        '阵雪': '17',
+        '霾': '18',
+        '': '19'
+    };
+
+    var icon=undefined;
+    if(weather!=undefined){
+        icon=dict[weather[weather.length-1]];
+        if(icon==undefined)
+            icon=dict[weather.substr(weather.length-2,2)];
+    }
+
+    if(icon==undefined)
+        icon='19';
+    img+=icon;
+    return img+'.png';
+}
+/**
+ * 显示未来一周天气
+ * @param pre_in_6
+ */
 function show_condition_weekly(pre_in_6) {
     if (undefined != pre_in_6) {
         var html = pre_in_6.map(function (day, index) {
             var tag = index == 5 ? ' last' : '';
-            var img = "images/weather_icon/";
-            //把天气状况转化成对应的icon
-            switch (day.weather) {
-                case '小雨':
-                    img += "1.png";
-                    break;
-                case '阵雨':
-                    img += "2.png";
-                    break;
-
-                case '阴':
-                    img += "4.png";
-                    break;
-
-                case '晴':
-                    img += "5.png";
-                    break;
-
-                case '多云':
-                    img += "6.png";
-                    break;
-                default :
-                    img += "3.png";
-            }
+            var img = find_exact_img(day.weather);
             var div = '<div class="T_weather_week_each ' + tag + '">' +
                 '<p class="week_calendar">' + day.month + '/' + day.day + '周' + day.week + ' </p>' +
                 '<img src="' + img + '" alt="" />' +
@@ -56,7 +69,7 @@ function show_condition_weekly(pre_in_6) {
     }
 }
 /**
- * 处理并再页面上展示数据
+ * 处理并在页面上展示数据
  * @param data
  */
 function process(data){
@@ -75,12 +88,12 @@ function process(data){
             $('#weather_index_box').append(div);//在页面上添加天气指数
         });
         //找到对应的四个天气指数并添加，后面需要做成左右可滑动的。
-        set_values([
+/*        set_values([
             ['umbrellaIndex div',indices.filter(function(e){return e.title==="雨伞指数"})[0].detail],
             ['clothIndex div',indices.filter(function(e){return e.title==="穿衣指数"})[0].detail],
             ['sportIndex div',indices.filter(function(e){return e.title==="运动指数"})[0].detail],
             ['coldIndex div',indices.filter(function(e){return e.title==="感冒指数"})[0].detail]
-        ]);
+        ]);*/
     }
     show_weather(ls());
 }
@@ -102,18 +115,23 @@ function set_values(mapping){
 function show_weather(w){
     if(undefined!=w) {
         console.log(w);
+        var pinyin=undefined;
+        if(w.pinyin!=undefined) pinyin= w.pinyin.toUpperCase();
         var maps = [
             ['cityname', w.city],
             ['temp', w.temp],
             ['condition', w.tq],
-            ['cityname_en', w.cityname_en],
+            ['cityname_en', pinyin],
             ['time', w.hour],
             ['weatherIndex', w.aqi+"("+air_condition_desc(w.aqi)+")"]
         ];
         set_values(maps);
+        $('#current_condition').attr('src',find_exact_img(w.tq,'64'))
     }
+    console.log("week data: ");
+    console.log(w.week);
     if(undefined!=w.week)
-    show_condition_weekly(JSON.parse(w.week));
+        show_condition_weekly(JSON.parse(w.week));
 }
 
 function air_condition_desc(aqi_string){
