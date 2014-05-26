@@ -157,5 +157,56 @@ function air_condition_desc(aqi_string){
     else if (aqi<=300) return "重度污染";
     else if(aqi>300) return "严重污染";
     else return "无数据";
-
 }
+var enableScroll = true;
+function scroll( container, eachScrollWidth, direction){
+	if( !enableScroll ){
+		return false;
+	}
+	if( direction == 1 ){
+	// 向左滑动
+		enableScroll = false;
+		$( container ).animate({
+			left : "-="+eachScrollWidth
+		}, 400, function(){
+			enableScroll = true;
+		});
+	}else if( direction == 2 ){
+	// 向右滑动
+		enableScroll = false;
+		$( container ).animate({
+			left:"+="+eachScrollWidth
+		}, 400, function(){
+			enableScroll = true;
+		});
+	}
+}
+$( '#scrollRight' ).on( 'click', function( e ){
+	e.preventDefault();
+	console.log( parseInt( $( "#scrollerBox" ).css( "left" ) ) );
+	var left = parseInt( $( "#scrollerBox" ).css( "left" ) );
+	if( left >= 0 ){
+		$( '#scrollerBox' ).css( "left","0px" );
+		return false;
+	}else if( left >= -124 ){
+		$( '#scrollRight' ).hide();
+	}
+	scroll( "#scrollerBox", 124, 2 );
+	if( $( '#scrollLeft' ).is( ":hidden" ) ){
+		$( '#scrollLeft' ).show();
+	}	
+});
+$( '#scrollLeft' ).on( 'click', function( e ){
+	console.log( 'scroll left' );
+	var left = parseInt( $( "#scrollerBox" ).css( "left" ) );
+	if(  left <= -496 ){
+		$( '#scrollerBox' ).css( "left","-496px" );
+		return false;
+	}else if( left <= -372 ){
+		$( '#scrollLeft' ).hide();
+	}
+	scroll( "#scrollerBox", 124, 1 );
+	if( $( '#scrollRight' ).is( ':hidden' ) ){
+		$( '#scrollRight' ).show();
+	}
+});
