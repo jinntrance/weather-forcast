@@ -5,9 +5,12 @@
 
 var contentType="text/html;charset=GB18030";
 
-var provinces= $.parseJSON(ls()['provinces']);//存储所有城市名及对应城市id数据，3k条左右。
+var provinces=[];
 
 $(function(){
+    var ppp=ls()['provinces'];
+    if(undefined!=ppp)
+    provinces=ppp;//存储所有城市名及对应城市id数据，3k条左右。
     //获取并解析城市数据。
     request_in_mime('http://tianqi.2345.com/js/citySelectData.js',function(rsp){
         eval(rsp);
@@ -23,7 +26,7 @@ $(function(){
             })
         });
         provinces=prov;
-        ls_set({provinces:JSON.stringify(provinces)});//存储下来，本地即时使用。
+        ls_set({provinces:provinces});//存储下来，本地即时使用。
     },contentType);
 
     $('#otherCity').autocomplete({
@@ -78,6 +81,7 @@ $(function(){
  * http://tianqi.2345.com/js/citySelectData.js
  * http://tianqi.2345.com/t/shikuang/58457.js
  * @param city_id
+ * @param callback
  */
 
 
@@ -90,7 +94,8 @@ function realtime_condition(city_id,callback){
         var rt=$.parseJSON(reg.exec(rsp)[0]);
         console.log(rt);
         callback(rt[hour]);
-    },contentType)
+    },contentType);
+    return true;
 }
 
 /**
@@ -99,14 +104,20 @@ function realtime_condition(city_id,callback){
  * @param url
  * @param callback
  * @param mime_string
+ * @param request_headers
  */
-function request_in_mime(url,callback,mime_string){
+function request_in_mime(url,callback,mime_string,request_headers){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type",mime_string);
     xhr.overrideMimeType(mime_string);
+    if(request_headers!=undefined){
+        for(var h in request_headers){
+            xhr.setRequestHeader(h,request_headers[h]);
+        }
+    }
     xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 ) {
+        if (xhr.readyState == 4 && xhr.status == 200) {
 //            console.log(xhr.response);
             callback(xhr.response.replace(/<img[\s\S]+?\/>/g,""));
         }
@@ -115,13 +126,19 @@ function request_in_mime(url,callback,mime_string){
     console.log("GETing "+url);
 }
 
-function request_in_mime_on_load(url,callback,mime_string){
+function request_in_mime_on_load(url,callback,mime_string,request_headers){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.setRequestHeader("Content-type",mime_string);
+    if(request_headers!=undefined){
+        for(var h in request_headers){
+            xhr.setRequestHeader(h,request_headers[h]);
+        }
+    }
     xhr.overrideMimeType(mime_string);
-    xhr.onload = function () {
-        if (xhr.readyState == 4 ) {
+    xhr.onloadend = function () {
+        if (xhr.status == 200 )
+        {
 //            console.log(xhr.response);
             callback(xhr.response.replace(/<img[\s\S]+?\/>/g,""));
         }

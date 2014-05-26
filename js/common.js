@@ -1,5 +1,7 @@
 
 
+var contentTypeUTF8="text/html;charset=UTF-8";
+
 /**
  * 获取当前PC所处IP所在的城市ID，并获取实时天气、未来天气指数等数据。
  * @see http://tianqi.2345.com/t/tq_common_json/58457.json
@@ -11,7 +13,7 @@ function air_condition(callback){
         var reg=/\d+/g;
         var city_id=reg.exec(rsp)[0];
         air_condition_with_city_id(city_id,callback);
-        realtime_condition_from_wcn(city_id,callback)
+        //realtime_condition_from_wcn(city_id,callback)
     })
 }
 /**
@@ -21,13 +23,13 @@ function air_condition(callback){
  * @param callback
  */
 function realtime_condition_from_wcn(city_id,callback){
-    var url='http://tianqi.2345.com/t/shikuang/'+city_id+'.js'
+    var url='http://tianqi.2345.com/t/shikuang/'+city_id+'.js';
     request(url,function(rsp){
         eval(rsp);//运行jsonp
         console.log("cn weather city id is:");
         var new_city_id=weatherinfovar.weatherinfo.cityid;//中国天气网的对应的城市ID
         console.log(new_city_id);
-        weather_info(new_city_id,callback)
+        weather_info(new_city_id,callback);
     })
 }
 
@@ -37,49 +39,67 @@ function realtime_condition_from_wcn(city_id,callback){
  * @param callback
  */
 function air_condition_with_city_id(city_id,callback){
+    var weather_temp=undefined;
     var url="http://tianqi.2345.com/t/tq_common_json/"+city_id+".json";
     realtime_condition(city_id,function(w){
         if(undefined!=w) {
             ls_set(w);
+            weather_temp=w;
         }
     });
 
     request(url,function(rsp){
         var json=$.parseJSON(rsp);
-        var cityname_en=json.pinyin.toUpperCase();
-        $('#cityname_en').html(cityname_en);//页面上设置英文名
         //获取未来一周的天气
 //        var week=[json.day1,json.day2,json.day3,json.day4,json.day5,json.day6,json.day7];
         var week=[json.day2,json.day3,json.day4,json.day5,json.day6,json.day7];
+        var today=json.day1;
+        if(weather_temp==undefined)
+            ls_set({
+                tq:today.weather,
+                temp:today.tempLow+'+'
+            });
         ls_set(json);
-        ls_set({
-            cityname_en:cityname_en,
-            week:JSON.stringify(week)
-        });
-        var new_url="http://tianqi.2345.com/"+cityname_en.toLocaleLowerCase()+"/"+city_id+".htm";
+        console.log("fetched json: ");
+        console.log(json);
+        var new_url="http://tianqi.2345.com/"+json.pinyin+"/"+city_id+".htm";
         request_in_mime_on_load(new_url,function(response){
-            var rsp=response.replace(/<img[\s\S]+?\/>/g,"");
-            console.log($(rsp));
-            var cond=$(rsp).find("#liveInfoAqi");
-            console.log(rsp.indexOf('今日生活指数'));
-            console.log("liveInfoAqi is:");
-            console.log($(rsp).find('#life_data').text());
+            var reg=/<ul[\s\S]+?<\/ul>/g;
+            var uls=response.match(reg).filter(function(ul){
+                return ul.indexOf('lifeindex')>=1
+            });
+            console.log("all uls:");
+            console.log(uls);
+//            if(undefined!=uls&&uls.length==1) {
+            var rsp = $(response);
+            console.log(rsp);
+            console.log("life_data is:");
+            console.log(rsp.find('#life_data').text());
 //                var str=cond.find('em a').html()+"("+cond.find('b a').html()+")";
-            var str=json.aqi;
-            console.log("condition: "+str);
-            $('#weatherIndex').html(str);//设置空气指数
             callback({
-                week:week,
-                indices_name:$(rsp).find('.des .green').map(function(){
-                    console.log("name:"+$(this).text());
+                week: week,
+                indices_name: rsp.find('ul.lifeindex .des h4').map(function (item) {
+                    console.log(item);
+                    console.log("name:" + $(this).text());
                     return $(this).text();//获取指数名字
                 }).toArray(),
-                indices:$(rsp).find('.des p').map(function(){
-                    console.log("content:"+$(this).text());
+                indices: rsp.find('ul.lifeindex .des p').map(function (item) {
+                    console.log("content:" + $(this).text());
                     return $(this).text();//获取指数对应内容
                 }).toArray()
             })
-        },contentType)
+        },contentType,{
+            Accept:"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+//           'Accept-Encoding':'gzip,deflate,sdch',
+         'Accept-Language':'zh,en-US;q=0.8,en;q=0.6,en-GB;q=0.4,fr;q=0.2,zh-TW;q=0.2,zh-CN;q=0.2',
+         'Cache-Control':'max-age=0'
+//         'Cookie':'defaultCityID='+city_id+'; wc='+city_id+'; lc='+city_id+'; lc2='+city_id+';',
+//          'Origin':'http://tianqi.2345.com/'
+//         'Connection':'keep-alive',
+//            'Host':'tianqi.2345.com',
+//            Referer:new_url,
+//            'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36'
+        })
     })
 }
 
@@ -91,10 +111,10 @@ function air_condition_with_city_id(city_id,callback){
  */
 function weather_info(city_id,callback){
     var url="http://www.weather.com.cn/weather/"+city_id+".shtml";
-    request_on_load(url,function(rsp){
-        var weather=$.parseHTML(rsp);
+    request_in_jquery(url,function(rsp){
+        var weather=$($.parseHTML(rsp));
         var prediction=[];
-        $(weather).find('table.yuBaoTable').each(function(index) {
+        weather.find('table.yuBaoTable').each(function(index) {
 
             if(2==$(this).find('tr').size()) {
                 console.log("pushing "+index);
@@ -110,8 +130,8 @@ function weather_info(city_id,callback){
                 });
             }
         });
-        console.log($(weather).find('.zs li'));
-        var indices = $(weather).find('.zs li').map(function(item){
+        console.log(weather.find('.zs li'));
+        var indices = weather.find('.zs li').map(function(item){
             return {
                 title: $(item).find('h3').text(),
                 detail: $(item).find('aside').html()
@@ -161,12 +181,20 @@ function request(url,callback){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);//GET url的内容并异步处理。
     xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 ) {
+        if (xhr.readyState == 4 && xhr.status == 200 ) {
 //            console.log(responseText);
             callback(xhr.responseText.replace(/<img[\s\S]+?\/>/g,""));//去掉所有<img/>标签以防止解析时报错“不能获取到图片”。
         }
     };
     xhr.send();
+    console.log("GETing "+url);
+}
+
+function request_in_jquery(url,callback){
+    $.get(url,function (rsp) {
+      callback(rsp.replace(/<img[\s\S]+?\/>/g,""));//去掉所有<img/>标签以防止解析时报错“不能获取到图片”。
+
+    });
     console.log("GETing "+url);
 }
 
@@ -179,7 +207,7 @@ function request_on_load(url,callback){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.onload = function () {
-        if (xhr.status==200 &&xhr.readyState == 4 ) {
+        if (xhr.status==200) {
 //            console.log(xhr.responseText);
             var data=xhr.responseText.replace(/<img[\s\S]+?\/>/g,"");
             callback(data);

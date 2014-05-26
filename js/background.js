@@ -34,7 +34,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
             break;
         case 'openSettings':
             chrome.tabs.create({url: chrome.runtime.getURL("options.html")+'#'+request.anchor});
-            sendResponse({data:{tabid:sender.tab.id}})
+            sendResponse({data:{tabid:sender.tab.id}});
             break;
         default :
             sendResponse({data:[]}); // snub them.
