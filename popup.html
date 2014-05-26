@@ -63,22 +63,72 @@
         </div>
     </section>
     <section class="clearfix T_weather_index_box" id="weather_index_box">
-        <div class="T_weather_each_index" id="umbrellaIndex">
-            <p>雨伞指数</p>
-            <div>天气较好，不用带伞。</div>
-        </div>
-        <div class="T_weather_each_index" id="clothIndex">
-            <p>穿衣指数</p>
-            <div>较舒适，建议穿薄外套或牛仔裤等服饰。</div>
-        </div>
-        <div class="T_weather_each_index" id="sportIndex">
-            <p>运动指数</p>
-            <div>较适宜，在户外运动，请注意增减衣物。</div>
-        </div>
-        <div class="T_weather_each_index" id="coldIndex">
-            <p>感冒指数</p>
-            <div>较易发，温差较大，较易感冒，注意防护。</div>
-        </div>
+	<style type="text/css">
+		#weather_index_box{
+			overflow:hidden;
+			position:relative;
+			height:121px;
+		}
+		#scrollerBox{
+			width:10000px;
+			position:absolute;
+			left:0;
+			top:0;
+		}
+		#scrollLeft,
+		#scrollRight{
+			position:absolute;
+			width:21px;
+			height:21px;
+			display:block;
+			background-color:#ccc;
+		}
+		#scrollRight{
+			left:0;
+			top:50px;
+			display:none;
+		}
+		#scrollLeft{
+			right:0;
+			top:50px;
+		}
+	</style>
+		<div id="scrollerBox" class="clearfix">
+			<div class="T_weather_each_index" id="umbrellaIndex">
+				<p>雨伞指数</p>
+				<div>天气较好，不用带伞。</div>
+			</div>
+			<div class="T_weather_each_index" id="clothIndex">
+				<p>穿衣指数</p>
+				<div>较舒适，建议穿薄外套或牛仔裤等服饰。</div>
+			</div>
+			<div class="T_weather_each_index" id="sportIndex">
+				<p>运动指数</p>
+				<div>较适宜，在户外运动，请注意增减衣物。</div>
+			</div>
+			<div class="T_weather_each_index" id="coldIndex">
+				<p>感冒指数</p>
+				<div>较易发，温差较大，较易感冒，注意防护。</div>
+			</div>
+			<div class="T_weather_each_index" id="umbrellaIndex">
+				<p>雨伞指数</p>
+				<div>天气较好，不用带伞。</div>
+			</div>
+			<div class="T_weather_each_index" id="clothIndex">
+				<p>穿衣指数</p>
+				<div>较舒适，建议穿薄外套或牛仔裤等服饰。</div>
+			</div>
+			<div class="T_weather_each_index" id="sportIndex">
+				<p>运动指数</p>
+				<div>较适宜，在户外运动，请注意增减衣物。</div>
+			</div>
+			<div class="T_weather_each_index" id="coldIndex">
+				<p>感冒指数</p>
+				<div>较易发，温差较大，较易感冒，注意防护。</div>
+			</div>
+		</div>
+		<a href="#" id="scrollLeft"></a>
+		<a href="#" id="scrollRight"></a>
     </section>
     <section class="clearfix T_weather_operator">
         <a href="plan.html" class="T_weather_schedule cur_operator">查看我的日程安排</a>

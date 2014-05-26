@@ -158,31 +158,13 @@
 				plan.repeatTime = 1;
 				plan.repeatDay = $( '#repeatDay' ).val();
 				// 将按天重复的计划加入到存储列表中，用repeatTime字段来区分
-				/*
-				chrome.storage.sync.get( 'plans', function( objs ){
-					if( !objExist( objs ) ){
-						var planList = [];
-						planList.push( plan );
-						chrome.storage.sync.set( {'plans':planList}, function( obj ){
-							console.log( 'init plans success' );
-						})
-					}else{
-						objs.plans.push( plan );
-						//newPlanList = objs.plans.sort( sortByTimeStamp );
-						console.log( newPlanList );
-						chrome.storage.sync.set( {'plans' : newPlanList }, function( obj ){
-							console.log( 'set new plans success' );
-							console.log( obj.plans );
-						});
-					}
-				})
-				*/
 			}else if( $( 'input[name="repeattime"]:checked' ).val() == 2 ){
 				plan.repeatTime = 2;
 				plan.repeatWeek = $( '#repeatWeek' ).val();
 				console.log( 'repeattime: '+2 );
 				console.log( "repeatWeek: "+$( '#repeatWeek' ).val() );
 			}
+			/*
 			chrome.storage.sync.get( 'plans', function( objs ){
 				if( !objExist( objs ) ){
 					var planList = [];
@@ -193,13 +175,16 @@
 				}else{
 					objs.plans.push( plan );
 					//newPlanList = objs.plans.sort( sortByTimeStamp );
-					console.log( newPlanList );
-					chrome.storage.sync.set( {'plans' : newPlanList }, function( obj ){
-						console.log( 'set new plans success' );
-						console.log( obj.plans );
-					});
+					
+				//	console.log( newPlanList );
+				//	chrome.storage.sync.set( {'plans' : newPlanList }, function( obj ){
+				//		console.log( 'set new plans success' );
+				//		console.log( obj.plans );
+				//	});
+					
 				}
 			})
+			*/
 		}
 		if( $( '#yuIndex' ).is( ':checked' ) ){
 			plan.yuIndex = 1;
@@ -244,11 +229,13 @@
 			}else{
 				objs.plans.push( plan );
 				//newPlanList = objs.plans.sort( sortByTimeStamp );
+				
 				console.log( objs.plans );
 				chrome.storage.sync.set( {'plans' : objs.plans }, function( obj ){
 					console.log( 'set new plans success' );
 					console.log( obj.plans );
 				});
+				
 			}
 		});
 		window.location.href = 'plan.html'

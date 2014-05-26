@@ -59,7 +59,8 @@ $(function(){
 							yiIndex : planLists.plans[i].yiIndex,
 							yuIndex : planLists.plans[i].yuIndex,
 							planTitle : planLists.plans[i].planTitle,
-							timestamp : thisTimestamp
+							timestamp : thisTimestamp,
+							repeatTime : planLists.plans[i].repeatTime
 						}
 						planList.push( obj );
 						thisTimestamp += 86400000*repeatCycle;
@@ -101,7 +102,8 @@ $(function(){
 								yiIndex : planLists.plans[i].yiIndex,
 								yuIndex : planLists.plans[i].yuIndex,
 								planTitle : planLists.plans[i].planTitle,
-								timestamp : plantime
+								timestamp : plantime,
+								repeatTime : planLists.plans[i].repeatTime
 							}
 							planList.push( obj );
 							break;
@@ -178,9 +180,10 @@ $(function(){
 						break;
 					}
 					filled = true;
-					str += '<div class="clearfix each_operator">\
+//					console.log( planList[planListPos] );
+					str += '<div class="clearfix each_operator" data-timestamp='+planList[planListPos].timestamp+' data-repeat='+planList[planListPos].repeatTime+'>\
 								<span class="time">'+planList[planListPos].calendarTime+'</span>\
-								<p class="plan">'+planList[planListPos].planTitle;
+								<p class="plan"><span class="plan_title">'+planList[planListPos].planTitle+'</span>';
 					if( planList[planListPos].yuIndex == 1 ){
 						str += '<span class="weather_icon yu_icon"></span>';
 					}
@@ -205,13 +208,14 @@ $(function(){
 					if( planList[planListPos].diaoIndex == 1 ){
 						str += '<span class="weather_icon diao_icon"></span>';
 					}
-					str += '</p></div>';			
+					str += '<a href="#" class="delete_plan">删除</a></p></div>';			
 				}
 			}
 			str += '</div></li>';
 		}
 		return str;
 	}
+	/*
 	// startTimestamp 为当前时间 
 	// initStartTimestamp 为当天的0点0分0秒的时间戳
 	function getPlanList( startTimestamp, endTimestamp, initStartTimestamp ){
@@ -248,7 +252,8 @@ $(function(){
 								yiIndex : planLists.plans[i].yiIndex,
 								yuIndex : planLists.plans[i].yuIndex,
 								planTitle : planLists.plans[i].planTitle,
-								timestamp : thisTimestamp
+								timestamp : thisTimestamp,
+								repeatTime : planLists.plans[i].repeatTime
 							}
 							planList.push( obj );
 							thisTimestamp += 86400000*intervalDay;
@@ -261,7 +266,61 @@ $(function(){
 		});
 		return planList;
 	}
+	*/
 	function sortByTimeStamp( a, b ){
 		return a.timestamp - b.timestamp;
 	}
+	$( document ).on( 'click', '.delete_plan', function( e ){
+		e.preventDefault();
+		var target = e.target;
+		var repeat = $( this ).parents( '.each_operator' ).data( 'repeat' ),
+			timestamp = $( this ).parents( '.each_operator' ).data( 'timestamp' ),
+			title = $( this ).siblings( '.plan_title' ).text();
+		chrome.storage.sync.get( 'plans' , function( objs ){
+			console.log( 'before delete' );
+			var displayList = $( '.each_operator' );
+			console.log( objs.plans );
+			console.log( timestamp );
+			console.log( repeat );
+			if( repeat == 1 || repeat == 2){ // 属于重复任务，删除的时候不能仅仅判断时间戳是否相等
+				for( var i in objs.plans ){
+					if( Math.abs( timestamp-objs.plans[i].timestamp )%86400000 == 0 && title == objs.plans[i].planTitle ){
+						objs.plans.splice( i, 1 );
+					}
+				}
+				for( var i=0; i<displayList.length; i++ ){
+					if( Math.abs( parseInt( $( displayList[i] ).data( 'timestamp' ) )-timestamp )%86400000 == 0 && $( displayList[i] ).find( '.plan_title' ).text() == title ){
+						$( displayList[i] ).remove();
+					}
+				}
+				// 删除显示列表中的所有相同项
+			}else{
+				for( var i in objs.plans ){
+					if( timestamp == objs.plans[i].timestamp ){
+						console.log( 'delete' );
+						objs.plans.splice( i, 1 );
+						break;
+					}
+				}
+				console.log( displayList );
+				for( var i=0; i<displayList.length; i++ ){
+					console.log( $( displayList[i] ).data( 'timestamp' ) );
+					if( $( displayList[i] ).data( 'timestamp' ) == timestamp ){
+						$( displayList[i] ).remove();
+						break;
+					}
+				}
+				// 删除显示列表中的对应项
+			}
+			for( var i=0; i<$( '.operator_box' ).length; i++ ){
+				if( $( '.operator_box' ).eq( i ).html() == "" ){
+					$( '.operator_box' ).eq( i ).html( "<p>无日程</p>" );
+				}
+			}
+			// 更新存储列表数据
+			chrome.storage.sync.set({ 'plans' : objs.plans }, function(){
+				console.log( 'update planlist success' );
+			})
+		});
+	});
 });
