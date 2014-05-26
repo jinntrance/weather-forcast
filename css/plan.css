@@ -27,28 +27,28 @@ a{
 	vertical-align:middle;
 }
 .yu_icon{
-	background:url( 'sprite.png' ) 0 0 no-repeat;
+	background:url( '../images/sprite.png' ) 0 0 no-repeat;
 }
 .yi_icon{
-	background:url( 'sprite.png' ) -20px 0 no-repeat;
+	background:url( '../images/sprite.png' ) -20px 0 no-repeat;
 }
 .dong_icon{
-	background:url( 'sprite.png' ) -40px 0 no-repeat;
+	background:url( '../images/sprite.png' ) -40px 0 no-repeat;
 }
 .gan_icon{
-	background:url( 'sprite.png' ) -60px 0 no-repeat;
+	background:url( '../images/sprite.png' ) -60px 0 no-repeat;
 }
 .ming_icon{
-	background:url( 'sprite.png' ) -80px 0 no-repeat;
+	background:url( '../images/sprite.png' ) -80px 0 no-repeat;
 }
 .shai_icon{
-	background:url( 'sprite.png' ) -100px 0 no-repeat;
+	background:url( '../images/sprite.png' ) -100px 0 no-repeat;
 }
 .xi_icon{
-	background:url( 'sprite.png' ) -120px 0 no-repeat;
+	background:url( '../images/sprite.png' ) -120px 0 no-repeat;
 }
 .diao_icon{
-	background:url( 'sprite.png' ) -140px 0 no-repeat;
+	background:url( '../images/sprite.png' ) -140px 0 no-repeat;
 }
 
 .clearfix:after{
