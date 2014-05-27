@@ -25,16 +25,26 @@ $(function(){
 	var planList = [];
 	chrome.storage.sync.get( 'plans', function( planLists ){
 		console.log( planLists.plans );
+		var newPlanList = [];
 		if( objExist( planLists ) ){
 			for( var i=0; i<planLists.plans.length; i++ ){
 				//console.log( planLists.plans[i] );
 				if( parseInt( planLists.plans[i].repeatTime ) == 0 ){
-				// 判断单次计划
-					if( planLists.plans[i].timestamp < timeEnd && planLists.plans[i].timestamp > curTimestamp ){
+				// 判断单次计划，如果在时间范围内则添加到待展示列表，否则如果已经过了时间，则删除掉
+					if( planLists.plans[i].timestamp >= curTimestamp ){
+						newPlanList.push( planLists.plans[i] );
+						if( planLists.plans[i].timestamp < timeEnd ){
+							planList.push( planLists.plans[i] );
+						}
+					}
+					/*
+					if( planLists.plans[i].timestamp < timeEnd && planLists.plans[i].timestamp >= curTimestamp ){
 						planList.push( planLists.plans[i] );
 					}
+					*/
 				}else if( planLists.plans[i].repeatTime == 1 ){
 				// 判断按天重复计划
+					newPlanList.push( planLists.plans[i] );
 					// 存储重复计划设计的当天的0点0分0秒的时间戳，为后面判断是否在当前时间范围内提供起始时间坐标
 					console.log( planLists.plans[i] );
 					var repeatDayTimestamp = new Date( planLists.plans[i].calendarDay+' 00:00:00' );
@@ -67,7 +77,7 @@ $(function(){
 					}
 				}else if( parseInt( planLists.plans[i].repeatTime ) == 2 ){
 				// 判断按星期重复计划
-					
+					newPlanList.push( planLists.plans[i] );
 					var repeatDayTimestamp = new Date( planLists.plans[i].calendarDay+' 00:00:00' );
 					var intervalDay = ( timeStart - repeatDayTimestamp )/86400000;
 					if( planLists.plans[i].repeatWeek == '一' ){
@@ -111,6 +121,10 @@ $(function(){
 					}
 				}
 			}
+			// 最后将新列存储下来，新列表中已经不包括过期了的任务了，所以就表现为删除掉了过期任务
+			chrome.storage.sync.set( {'plans' : newPlanList}, function(){
+				console.log( 'delete outdate plan success' );
+			});
 		}
 		//planList.sort( sortByTimeStamp );
 		console.log( planList );
@@ -184,6 +198,7 @@ $(function(){
 					str += '<div class="clearfix each_operator" data-timestamp='+planList[planListPos].timestamp+' data-repeat='+planList[planListPos].repeatTime+'>\
 								<span class="time">'+planList[planListPos].calendarTime+'</span>\
 								<p class="plan"><span class="plan_title">'+planList[planListPos].planTitle+'</span>';
+					//			<p class="plan"><input class="plan_title" value="'+planList[planListPos].planTitle+'" />';								
 					if( planList[planListPos].yuIndex == 1 ){
 						str += '<span class="weather_icon yu_icon"></span>';
 					}
@@ -322,5 +337,46 @@ $(function(){
 				console.log( 'update planlist success' );
 			})
 		});
+	});
+	$( document ).on( 'click', '.plan_title', function(){
+		console.log( 'click' );
+		var val = $( this ).text();
+		var repeatFlag = $( this ).parents( '.each_operator' ).data( 'repeat' );
+		if( repeatFlag == 0 || repeatFlag == 2 ){
+			$( this ).replaceWith( '<input class="plan_title_modify" type="text" value="'+val+'"/>' );
+		}else{
+			$( this ).replaceWith( '<input class="plan_title_modify plan_repeated" type="text" value="'+val+'"/>' );
+		}
+	});
+	$( document ).on( 'blur', '.plan_title_modify', function(){
+		var text = $( this ).val();
+		var timestamp = $( this ).parents( '.each_operator' ).data( 'timestamp' ),
+			repeat = $( this ).parents( '.each_operator' ).data( 'repeat' );
+		chrome.storage.sync.get( 'plans', function( objs ){
+			if( objExist( objs ) ){
+				for( var i in objs.plans ){
+					console.log( objs.plans[i] );
+					if( objs.plans[i].repeatTime == repeat ){
+						if( Math.abs( objs.plans[i].timestamp - timestamp )%86400000 == 0 ){
+							objs.plans[i].planTitle = text;
+						}
+					}
+				}
+				console.log( objs.plans );
+				chrome.storage.sync.set( { 'plans':objs.plans }, function(){
+					console.log( 'modified' );
+				});
+			}
+		});
+		$( this ).replaceWith( '<span class="plan_title">'+text+'</span>' );
+	});
+	$( document ).on( 'keydown', '.plan_repeated', function(){
+		var val = $( this ).val();
+		var len = $( '.each_operator' ).length;
+		for( var i=0; i<len; i++ ){
+			if( $( '.each_operator' ).eq( i ).data( 'repeat' ) == 1 ){
+				$( '.each_operator' ).eq( i ).find( '.plan_title' ).text( val );
+			}
+		}
 	});
 });

@@ -183,15 +183,14 @@ function scroll( container, eachScrollWidth, direction){
 }
 $( '#scrollRight' ).on( 'click', function( e ){
 	e.preventDefault();
-	console.log( parseInt( $( "#scrollerBox" ).css( "left" ) ) );
 	var left = parseInt( $( "#scrollerBox" ).css( "left" ) );
 	if( left >= 0 ){
 		$( '#scrollerBox' ).css( "left","0px" );
 		return false;
-	}else if( left >= -124 ){
+	}else if( left >= -121 ){
 		$( '#scrollRight' ).hide();
 	}
-	scroll( "#scrollerBox", 124, 2 );
+	scroll( "#scrollerBox", 121, 2 );
 	if( $( '#scrollLeft' ).is( ":hidden" ) ){
 		$( '#scrollLeft' ).show();
 	}	
@@ -199,13 +198,13 @@ $( '#scrollRight' ).on( 'click', function( e ){
 $( '#scrollLeft' ).on( 'click', function( e ){
 	console.log( 'scroll left' );
 	var left = parseInt( $( "#scrollerBox" ).css( "left" ) );
-	if(  left <= -496 ){
+	if(  left <= -484 ){
 		$( '#scrollerBox' ).css( "left","-496px" );
 		return false;
-	}else if( left <= -372 ){
+	}else if( left <= -363 ){
 		$( '#scrollLeft' ).hide();
 	}
-	scroll( "#scrollerBox", 124, 1 );
+	scroll( "#scrollerBox", 121, 1 );
 	if( $( '#scrollRight' ).is( ':hidden' ) ){
 		$( '#scrollRight' ).show();
 	}

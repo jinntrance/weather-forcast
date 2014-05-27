@@ -199,6 +199,34 @@ html,body{
 .T_weather_settings{
 	background:url( 'images/setting.png' ) 16px 14px no-repeat;
 }
+#weather_index_box{
+	overflow:hidden;
+	position:relative;
+	height:121px;
+}
+#scrollerBox{
+	width:10000px;
+	position:absolute;
+	left:0;
+	top:0;
+}
+#scrollLeft,
+#scrollRight{
+	position:absolute;
+	width:21px;
+	height:21px;
+	display:block;
+	background-color:#ccc;
+}
+#scrollRight{
+	left:0;
+	top:50px;
+	display:none;
+}
+#scrollLeft{
+	right:0;
+	top:50px;
+}
 /********* ���� ************/
 .T_calendar th{
 	color:#fdf8c4;
