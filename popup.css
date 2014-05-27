@@ -219,4 +219,11 @@ html,body{
 strong, b {
     font-weight: bold;
 }
+
+#cityname{
+    width: 81px;
+    text-overflow: clip;
+    overflow: hidden;
+    white-space: nowrap;
+}
 /********* ���� ************/
