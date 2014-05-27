@@ -130,12 +130,12 @@ function show_weather(w){
 
 //    var pre_in_6=data.week.slice(1,7);//未来6天天气
         if(undefined!=indices&&indices.length>1){
-            $('#weather_index_box').html('');
-            indices.forEach(function(content,i){
+            $('#scrollerBox').html('');
+            indices.slice(0,8).forEach(function(content,i){
                 console.log("index content:"+content);
                 var div='<div class="T_weather_each_index">' +
                     '<p>'+indices_name[i]+'</p><div>'+content+'</div></div>';
-                $('#weather_index_box').append(div);//在页面上添加天气指数
+                $('#scrollerBox').append(div);//在页面上添加天气指数
             });
             //找到对应的四个天气指数并添加，后面需要做成左右可滑动的。
             /*        set_values([

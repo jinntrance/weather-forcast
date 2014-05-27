@@ -132,35 +132,49 @@ html,body{
 	color:#fff;
 	font-size:12px;
 }
-.T_weather_each_index:first-of-type{
+.T_weather_each_index:first-of-type,
+.T_weather_each_index:nth-of-type(5){
 	background-color:#48cfad;
 	border-bottom:3px solid #37bc9b;
 }
-.T_weather_each_index:first-of-type p{
+.T_weather_each_index:first-of-type p,
+.T_weather_each_index:nth-of-type(5) p{
 	color:#1d856b;
 	background-color:#37bc9b;
 }
-.T_weather_each_index:nth-of-type(2){
+.T_weather_each_index:nth-of-type(2),
+.T_weather_each_index:nth-of-type(6)
+{
 	background-color:#5d9cec;
 	border-bottom:3px solid #4a89dc;
 }
-.T_weather_each_index:nth-of-type(2) p{
+.T_weather_each_index:nth-of-type(2) p,
+.T_weather_each_index:nth-of-type(6) p
+{
 	color:#2b5ea2;
 	background-color:#4a89dc;
 }
-.T_weather_each_index:nth-of-type(3){
+.T_weather_each_index:nth-of-type(3),
+.T_weather_each_index:nth-of-type(7)
+{
 	background-color:#ed5565;
 	border-bottom:3px solid #da4453;
 }
-.T_weather_each_index:nth-of-type(3) p{
+.T_weather_each_index:nth-of-type(3) p,
+.T_weather_each_index:nth-of-type(7) p
+{
 	color:#971c29;
 	background-color:#da4453;
 }
-.T_weather_each_index:nth-of-type(4){
+.T_weather_each_index:nth-of-type(4),
+.T_weather_each_index:nth-of-type(8)
+{
 	background-color:#eda055;
 	border-bottom:3px solid #dc8836;
 }
-.T_weather_each_index:nth-of-type(4) p{
+.T_weather_each_index:nth-of-type(4) p,
+.T_weather_each_index:nth-of-type(8) p
+{
 	color:#8f4f11;
 	background-color:#dc8836;
 }
