@@ -8,6 +8,9 @@ $(function(){
 
     //
    air_condition(process);
+    $('a#settings').click(function(){
+        chrome.extension.sendRequest({method: 'openSettings',anchor:''});
+    })
 });
 
 function find_exact_img(weather,size) {
@@ -128,31 +131,34 @@ function show_weather(w){
         //各类指数显示
         console.log('life index:');
 
-        var indices_name=JSON.parse(w['indices_name']);//指数的Titles
-        var indices=JSON.parse(w['indices']);//指数具体内容提示
-        var pre_in_6=JSON.parse(w['week']);//未来6天天气
-        console.log(indices);
-        console.log(indices_name);
+
+        if(w['indices_name']!=undefined) {
+            var indices_name=JSON.parse(w['indices_name']);//指数的Titles
+            var indices = JSON.parse(w['indices']);//指数具体内容提示
+            var pre_in_6 = JSON.parse(w['week']);//未来6天天气
+            console.log(indices);
+            console.log(indices_name);
 
 //    var pre_in_6=data.week.slice(1,7);//未来6天天气
-        if(undefined!=indices&&indices.length>1){
+            if (undefined != indices && indices.length > 1) {
 //            $('#scrollerBox').html('');
 
-            indices.slice(0,8).forEach(function(content,i){
-                console.log('index is ' +i );
-                console.log("index content:"+content);
-/*                var div='<div class="T_weather_each_index">' +
-                    '<p>'+indices_name[i]+'</p><div>'+content+'</div></div>';*/
+                indices.slice(0, 8).forEach(function (content, i) {
+                    console.log('index is ' + i);
+                    console.log("index content:" + content);
+                    /*                var div='<div class="T_weather_each_index">' +
+                     '<p>'+indices_name[i]+'</p><div>'+content+'</div></div>';*/
 //                $('#scrollerBox').append(div);//在页面上添加天气指数
-                $('#scrollerBox .T_weather_each_index div')[i].innerHTML=content;
-            });
-            //找到对应的四个天气指数并添加，后面需要做成左右可滑动的。
-            /*        set_values([
-             ['umbrellaIndex div',indices.filter(function(e){return e.title==="雨伞指数"})[0].detail],
-             ['clothIndex div',indices.filter(function(e){return e.title==="穿衣指数"})[0].detail],
-             ['sportIndex div',indices.filter(function(e){return e.title==="运动指数"})[0].detail],
-             ['coldIndex div',indices.filter(function(e){return e.title==="感冒指数"})[0].detail]
-             ]);*/
+                    $('#scrollerBox .T_weather_each_index div')[i].innerHTML = content;
+                });
+                //找到对应的四个天气指数并添加，后面需要做成左右可滑动的。
+                /*        set_values([
+                 ['umbrellaIndex div',indices.filter(function(e){return e.title==="雨伞指数"})[0].detail],
+                 ['clothIndex div',indices.filter(function(e){return e.title==="穿衣指数"})[0].detail],
+                 ['sportIndex div',indices.filter(function(e){return e.title==="运动指数"})[0].detail],
+                 ['coldIndex div',indices.filter(function(e){return e.title==="感冒指数"})[0].detail]
+                 ]);*/
+            }
         }
     }
 }
