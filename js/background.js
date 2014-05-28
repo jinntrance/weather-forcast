@@ -1,6 +1,6 @@
 
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-    console.log("received method: "+request.method)
+    console.log("received method: "+request.method);
     switch(request.method){
         case "getLocalStorage":
             sendResponse({data: localStorage});
@@ -31,7 +31,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 
 chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
     var tabid = sender.tab.id;
-    console.log("received "+message.data)
+    console.log("received "+message.data);
     switch(message.action) {
         case 'is_user_signed_on':
             isUserSignedOn();
@@ -45,12 +45,13 @@ chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
 });
 
 function show_notification(notificationsMsg){
-    var notification = webkitNotifications.createNotification("./weather_plugin.png", "提醒",notificationsMsg );
+    var notification = webkitNotifications.createNotification("./weather_plugin.png", "天气系统提醒您",notificationsMsg );
     notification.addEventListener('click', function () {
+        alert('成功取消提醒');
         notification.cancel();
-        chrome.tabs.create({
+/*        chrome.tabs.create({ //TODO
             url:"http://tianqi.2345.com"
-        })
+        })*/
     });
     setTimeout(function(){
         notification.cancel();
@@ -60,7 +61,7 @@ function show_notification(notificationsMsg){
 
 function notify(){
     var list=JSON.parse(localStorage['planList']);
-    var indices=JSON.parse(localStorage['indices_name']);
+    var indices=JSON.parse(localStorage['indices']);
     var first_notify=1;
     if(localStorage['first_notify']!=undefined)
         first_notify=parseInt(localStorage['first_notify']);
@@ -75,8 +76,8 @@ function notify(){
           console.log(show_indices);
           var indices_msg=indices.filter(function(e,i){
                 return show_indices[i]==1;
-          }).join('，');
-          show_notification('【'+item.calendarTime+"】【"+item.planTitle+'】'+indices_msg)
+          }).join('；');
+          show_notification('【'+item.calendarTime+"】【"+item.planTitle+'】\n'+indices_msg+'\n【点击取消提醒】')
         }
     });
 /*    //右下角的提醒
@@ -87,7 +88,7 @@ function notify(){
     },function(resp){
         console.log(resp.data)
     });*/
-    chrome.browserAction.setBadgeText({text: localStorage['temp']});
+    chrome.browserAction.setBadgeText({text: localStorage['temp']+'℃'});
 }
 
 function notify_helper(){
@@ -101,7 +102,7 @@ function notify_helper(){
 }
 
 $(function(){
-    chrome.browserAction.setBadgeText({text: localStorage['temp']});
+    chrome.browserAction.setBadgeText({text: localStorage['temp']+'℃'});
     if(localStorage['notify_on_start']!='no')
         notify();
     var interval=60;//60 min提醒一次。
