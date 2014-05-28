@@ -101,9 +101,9 @@ function notify_helper(){
 }
 
 $(function(){
+    chrome.browserAction.setBadgeText({text: localStorage['temp']});
     if(localStorage['notify_on_start']!='no')
         notify();
-    //每60 min提醒一次。
     var interval=60;//60 min提醒一次。
     if(localStorage['notify_reg']=='oclock'){
         localStorage['interval']=60;
