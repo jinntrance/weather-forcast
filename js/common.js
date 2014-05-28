@@ -58,8 +58,12 @@ function air_condition_with_city_id(city_id,callback){
             ls_set({
                 tq:today.weather,
                 temp:today.tempLow+'+'
+
             });
         ls_set(json);
+        ls_set({
+            today:today.tempLow+'~'+today.tempHigh
+        });
         console.log("fetched json: ");
         console.log(json);
         var new_url="http://tianqi.2345.com/"+json.pinyin+"/"+city_id+".htm";
@@ -153,18 +157,31 @@ function weather_in_days_of(number){
     //腾讯天气 http://weather.news.qq.com/index2012/js/autoSearch_v3.js
     //http://weather.news.qq.com/
 }
+/**
+ * remove the item at index i from array
+ * @param array
+ * @param i
+ */
+function removeFrom(array,i){
+    var a=array.slice(0,i).concat( array.slice(i+1));
+    array=a;
+    return a;
+}
 
 //用于通信，从chrome.storage里取出存在本地localStorage来
 function ls(){
     chrome.extension.sendRequest({method: "getLocalStorage"}, function (response) {
         for (var k in response.data)
             localStorage[k] = response.data[k];
+        return localStorage;
     });
     return localStorage;
 }
 
 //用于通信，把本地localStorage存在chrome.storage里以便同步。
 function ls_set(data){
+    for (var k in data)
+        localStorage[k] = data[k];
     chrome.extension.sendRequest({method: "setLocalStorage",data:data}, function (response) {
         for (var k in response.data)
             localStorage[k] = response.data[k];

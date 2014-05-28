@@ -251,3 +251,10 @@
 		return a.timestamp - b.timestamp;
 	}
 });
+
+
+$(function(){
+  var d=new Date();
+  $('#calendarDay').val(d.getFullYear()+'-'+ (d.getMonth()+1)+'-'+ d.getDate());
+  $('#calendarTime').val(d.getHours()+':'+ d.getMinutes());
+});

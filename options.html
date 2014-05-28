@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Settings</title>
+    <link href="css/options.css" type="text/css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="css/style.css">
+</head>
+<body class="options">
+<div id="wrapper">
+    <div id="header"><h1>天气系统设置</h1></div>
+    <div id="options">
+        <fieldset>
+            <legend>功能设置</legend>
+            <div id="shortcuts_table">
+                <div id="menu_shortcuts">
+
+                <div>
+                    <div>      打开浏览器提醒 : </div>
+                    <div class="td">
+                    <label>
+                            <input name="notify_on_start" type="radio" value="yes" checked="checked">是
+                        </label>
+                        <label>
+                            <input name="notify_on_start" type="radio" value='no'>否
+                        </label>
+                    </div>
+
+                </div>
+                 <div>
+                        <div>      </div>
+                        <div class="td">
+                            <label>距离事件具体多少小时的时候提醒
+                                <select name="first_notify">
+                                    <option selected="selected" >1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>
+                                    <option>7</option>
+                                    <option>8</option>
+                                    <option>9</option>
+                                    <option>10</option>
+                                    <option>11</option>
+                                    <option>12</option>
+                                    <option>13</option>
+                                </select>
+                            </label>
+                        </div>
+
+                    </div>
+                <div>
+                    <div>        重复提醒规则: </div><div class="td">
+                        <label>
+                            <input type="radio" name="notify_reg" value="oclock">
+                        </label> 整点提醒
+                    <label>
+                        <input type="radio" name="notify_reg" value="interval" checked="checked">
+                    </label> 间隔提醒
+                    </div>
+                </div>
+                <div>
+                    <div class="option-set" id="webster_set">
+                        间隔提醒时间段
+                        <label>
+                            <input name="interval" type="radio" value="60" checked="checked">1小时
+                        </label>
+                        <label>
+                            <input name="interval" type="radio" value='90' >1个半小时
+                        </label>
+                        <label>
+                            <input name="interval" type="radio" value='120' >2小时
+                        </label>
+
+                    </div>
+
+
+                </div>
+
+                </div>
+            </div>
+        </fieldset>
+
+
+
+        <div id="tip">
+            <span></span>
+        </div>
+    </div>
+    <div id="action_panel">
+        <div id="status"></div>
+        <input type="button" id="save" value="保存" />
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="js/common.js" charset="UTF-8"></script>
+<script type="text/javascript" src="js/options.js" charset="UTF-8"></script>
+</html>

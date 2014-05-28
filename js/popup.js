@@ -77,11 +77,16 @@ function process(data){
     ls_set({
         week:JSON.stringify(data.week)
     });
-    if(data.indices.length>=8&&data.indices.length==data.indices_name.length)
-    ls_set({
-        indices_name:JSON.stringify(data.indices_name),
-        indices:JSON.stringify(data.indices)
-    });
+    if(data.indices.length>=8&&data.indices.length==data.indices_name.length) {
+        var i=3;
+        data.indices=removeFrom(data.indices,3);
+        data.indices_name=removeFrom(data.indices_name,3);
+
+        ls_set({
+            indices_name: JSON.stringify(data.indices_name),
+            indices: JSON.stringify(data.indices)
+        });
+    }
     show_weather(ls());
 }
 
@@ -110,6 +115,7 @@ function show_weather(w){
             ['condition', w.tq],
             ['cityname_en', pinyin],
             ['time', w.hour],
+            ['todayTemp', w.today],
             ['weatherIndex', w.aqi+"("+air_condition_desc(w.aqi)+")"]
         ];
         set_values(maps);
@@ -130,12 +136,15 @@ function show_weather(w){
 
 //    var pre_in_6=data.week.slice(1,7);//未来6天天气
         if(undefined!=indices&&indices.length>1){
-            $('#scrollerBox').html('');
+//            $('#scrollerBox').html('');
+
             indices.slice(0,8).forEach(function(content,i){
+                console.log('index is ' +i );
                 console.log("index content:"+content);
-                var div='<div class="T_weather_each_index">' +
-                    '<p>'+indices_name[i]+'</p><div>'+content+'</div></div>';
-                $('#scrollerBox').append(div);//在页面上添加天气指数
+/*                var div='<div class="T_weather_each_index">' +
+                    '<p>'+indices_name[i]+'</p><div>'+content+'</div></div>';*/
+//                $('#scrollerBox').append(div);//在页面上添加天气指数
+                $('#scrollerBox .T_weather_each_index div')[i].innerHTML=content;
             });
             //找到对应的四个天气指数并添加，后面需要做成左右可滑动的。
             /*        set_values([

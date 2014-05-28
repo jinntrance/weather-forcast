@@ -104,7 +104,7 @@ html,body{
 }
 .T_weather_week_each  img{
 	display:block;
-	height:22px;
+	height:40px;
 	margin:10px auto;
 }
 .T_weather_index_box{
@@ -221,11 +221,13 @@ html,body{
 #scrollRight{
 	left:0;
 	top:50px;
+    background-image: url("images/left.png");
 	display:none;
 }
 #scrollLeft{
 	right:0;
 	top:50px;
+    background-image: url("images/right.png");
 }
 /********* ���� ************/
 .T_calendar th{
@@ -248,8 +250,8 @@ strong, b {
     font-weight: bold;
 }
 
-#cityname{
-    width: 81px;
+#cityname,#cityname_en {
+    width: 75px;
     text-overflow: clip;
     overflow: hidden;
     white-space: nowrap;

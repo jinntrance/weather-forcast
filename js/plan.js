@@ -125,6 +125,9 @@ $(function(){
 			chrome.storage.sync.set( {'plans' : newPlanList}, function(){
 				console.log( 'delete outdate plan success' );
 			});
+            ls_set({
+                'planList':JSON.stringify(newPlanList)
+            });
 		}
 		//planList.sort( sortByTimeStamp );
 		console.log( planList );

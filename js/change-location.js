@@ -40,17 +40,20 @@ $(function(){
                 request_in_mime(url,function(rsp){
 //                        console.log(rsp);
                         var reg=/\[[\s\S]+\]/;
-                        var src=$.parseJSON(reg.exec(rsp)[0].replace(/'/g,'"')).map(function(e){
+                        var list=reg.exec(rsp);
+                        if(list!=undefined&&list.length>0){
+                            var src=$.parseJSON(list[0].replace(/'/g,'"')).map(function(e){
 //                            console.log(e);
-                            var arry= e.split('|');
-                            //取出城市名字，并返回autocomplete所需格式。
-                            return {
-                                label:e,
-                                value:arry[0]
-                            }
-                        });
+                                var arry= e.split('|');
+                                //取出城市名字，并返回autocomplete所需格式。
+                                return {
+                                    label:e,
+                                    value:arry[0]
+                                }
+                            });
 //                        console.log(src)
-                        response(src);
+                            response(src);
+                        }
                     },contentType
                 );
 
